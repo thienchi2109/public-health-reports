@@ -92,3 +92,32 @@ export async function uploadReport(formData: FormData): Promise<{ success: boole
 export async function loadAllReports(): Promise<Record<string, ReportData>> {
     return await readReportData();
 }
+
+/**
+ * Server action to delete a specific report by month.
+ * @param month The month of the report to delete.
+ * @returns An object indicating success or failure with a message.
+ */
+export async function deleteReport(month: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const allReports = await readReportData();
+    
+    if (!(month in allReports)) {
+      return { success: false, message: `Không tìm thấy báo cáo cho ${month}.` };
+    }
+    
+    delete allReports[month];
+    await writeReportData(allReports);
+    
+    return { 
+      success: true, 
+      message: `Đã xóa báo cáo ${month} thành công.` 
+    };
+  } catch (error) {
+    console.error('Error in deleteReport action:', error);
+    if (error instanceof Error) {
+      return { success: false, message: error.message };
+    }
+    return { success: false, message: 'Đã xảy ra lỗi không xác định khi xóa báo cáo.' };
+  }
+}

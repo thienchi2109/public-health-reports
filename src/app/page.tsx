@@ -3,26 +3,38 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/header';
-import InfographicDashboard from '@/components/infographic-dashboard';
+import InfographicTemplate from '@/components/infographic-template';
 import type { ReportData } from '@/types/report-data';
 import { loadAllReports } from '@/app/admin/actions';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export default function Home() {
   const [allReports, setAllReports] = useState<Record<string, ReportData> | null>(null);
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
   const [displayData, setDisplayData] = useState<ReportData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await loadAllReports();
         setAllReports(data);
+        // Auto-select the latest month if available
+        const months = Object.keys(data);
+        if (months.length > 0) {
+          const latestMonth = months.sort((a, b) => {
+            const monthA = parseInt(a.replace('Tháng ', ''));
+            const monthB = parseInt(b.replace('Tháng ', ''));
+            return monthB - monthA;
+          })[0];
+          setSelectedMonths([latestMonth]);
+        }
       } catch (error) {
         console.error("Failed to load reports:", error);
         setAllReports({});
@@ -105,7 +117,7 @@ export default function Home() {
   const renderContent = () => {
     if (isLoading) {
       return (
-         <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground">
+         <div className="flex flex-col items-center justify-center h-screen text-center text-muted-foreground">
             <Loader2 className="h-8 w-8 animate-spin mb-4" />
             <p>Đang tải dữ liệu...</p>
          </div>
@@ -114,7 +126,7 @@ export default function Home() {
 
     if (!allReports || Object.keys(allReports).length === 0) {
        return (
-        <div className="flex flex-col items-center justify-center h-full text-center">
+        <div className="flex flex-col items-center justify-center h-screen text-center">
           <div className="bg-card border rounded-lg p-8 max-w-md mx-auto animate-in fade-in-50 duration-500">
             <h2 className="text-2xl font-bold mb-2">Chưa có Dữ liệu</h2>
             <p className="mb-4 text-muted-foreground">
@@ -128,56 +140,98 @@ export default function Home() {
       );
     }
 
-    const availableMonths = Object.keys(allReports).sort((a, b) => {
-        const monthA = parseInt(a.replace('Tháng ', ''));
-        const monthB = parseInt(b.replace('Tháng ', ''));
-        return monthA - monthB;
-    });
-
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <Card className="lg:col-span-1 h-fit">
-                <CardHeader>
-                    <CardTitle>Chọn Báo cáo</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">Chọn một hoặc nhiều tháng để xem infographic tổng hợp.</p>
-                    <div className="space-y-2">
-                        {availableMonths.map(month => (
-                            <div key={month} className="flex items-center space-x-2">
-                                <Checkbox 
-                                    id={month} 
-                                    onCheckedChange={(checked) => handleMonthSelection(month, checked as boolean)}
-                                />
-                                <Label htmlFor={month} className="cursor-pointer">{month}</Label>
-                            </div>
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
-
-            <div className="lg:col-span-3">
-                {displayData ? (
-                    <InfographicDashboard data={displayData} />
-                ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-center rounded-lg border-2 border-dashed border-muted-foreground p-8">
-                       <h2 className="text-2xl font-bold mb-2">Chọn Dữ liệu để Hiển thị</h2>
-                       <p className="mb-4 text-muted-foreground max-w-md">
-                           Vui lòng chọn ít nhất một tháng từ bảng bên trái để xem dữ liệu tổng hợp.
-                       </p>
-                    </div>
-                )}
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <div className={`bg-white border-r border-gray-200 transition-all duration-300 ${
+          sidebarCollapsed ? 'w-16' : 'w-80'
+        } flex-shrink-0`}>
+          <div className="p-4 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              {!sidebarCollapsed && (
+                <h2 className="text-lg font-semibold text-gray-900">Chọn Báo cáo</h2>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                className="p-2"
+              >
+                {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+              </Button>
             </div>
+          </div>
+          
+          <div className={`p-4 ${sidebarCollapsed ? 'hidden' : 'block'}`}>
+            <p className="text-sm text-gray-600 mb-4">
+              Chọn một hoặc nhiều tháng để xem infographic tổng hợp.
+            </p>
+            
+            <div className="space-y-3">
+              {Object.keys(allReports).sort((a, b) => {
+                const monthA = parseInt(a.replace('Tháng ', ''));
+                const monthB = parseInt(b.replace('Tháng ', ''));
+                return monthA - monthB;
+              }).map(month => (
+                <div key={month} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                  <Checkbox 
+                    id={month} 
+                    checked={selectedMonths.includes(month)}
+                    onCheckedChange={(checked) => handleMonthSelection(month, checked as boolean)}
+                  />
+                  <Label htmlFor={month} className="cursor-pointer text-sm font-medium">{month}</Label>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <Button asChild variant="outline" className="w-full">
+                <Link href="/admin">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Quản lý báo cáo
+                </Link>
+              </Button>
+            </div>
+          </div>
+          
+          {sidebarCollapsed && (
+            <div className="p-2">
+              <Button asChild variant="ghost" size="sm" className="w-full">
+                <Link href="/admin">
+                  <Settings className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
-    )
+
+        {/* Main Content */}
+        <div className="flex-1 overflow-hidden">
+          {displayData ? (
+            <InfographicTemplate 
+              key={selectedMonths.join('-')} 
+              data={displayData} 
+              selectedMonths={selectedMonths} 
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-center p-8">
+               <h2 className="text-2xl font-bold mb-2 text-gray-900">Chọn Dữ liệu để Hiển thị</h2>
+               <p className="mb-4 text-gray-600 max-w-md">
+                   Vui lòng chọn ít nhất một tháng từ sidebar bên trái để xem báo cáo infographic.
+               </p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
-      <main className="flex-1 p-4 md:p-8">
+      <div className="flex-1">
         {renderContent()}
-      </main>
+      </div>
     </div>
   );
 }

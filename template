@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Tình hình dịch bệnh Cần Thơ 6 tháng đầu năm 2025 (Cập nhật)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#003F5C] uppercase tracking-wide">Toàn cảnh Dịch bệnh</h1>
+            <h2 class="text-2xl md:text-3xl font-bold text-[#58508D] mt-2">6 tháng đầu năm 2025 tại TP. Cần Thơ</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-slate-600">
+                Phân tích tổng hợp dựa trên số liệu chính thức từ Báo cáo công tác y tế hàng tháng của Sở Y tế thành phố Cần Thơ, cung cấp cái nhìn sâu sắc về các xu hướng và điểm nóng dịch tễ.
+            </p>
+        </header>
+
+        <main class="space-y-12">
+            
+            <section id="trends" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-bold text-[#003F5C] mb-2">Diễn biến các ca mắc bệnh truyền nhiễm chính</h3>
+                <p class="text-slate-600 mb-6">Biểu đồ đường thể hiện sự biến động số ca mắc Sốt xuất huyết, Tay chân miệng và Sởi qua từng tháng, cho thấy rõ các đỉnh dịch và giai đoạn cần tập trung phòng chống cao độ.</p>
+                <div class="chart-container w-full max-w-full">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+            </section>
+            
+            <section id="highlights" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="bg-[#FF6361] text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-lg">Điểm Nóng Tháng 6</h4>
+                        <p class="text-sm opacity-90 mt-2">Tay chân miệng và Sốt xuất huyết có dấu hiệu gia tăng đột biến, đòi hỏi các biện pháp can thiệp khẩn cấp.</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-2xl font-bold">TCM: 154 ca <span class="text-sm font-normal">(+45)</span></p>
+                        <p class="text-2xl font-bold">SXH: 57 ca <span class="text-sm font-normal">(+10)</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                     <h4 class="font-bold text-lg text-[#003F5C] mb-2">Tổng Lượt Khám Chữa Bệnh</h4>
+                     <p class="text-8xl font-black text-[#FFA600]">1.19<span class="text-5xl align-top">tr</span></p>
+                     <p class="text-slate-600 mt-2">Tổng cộng 1,196,963 lượt khám đã được thực hiện tại các cơ sở y tế trong 6 tháng.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h4 class="font-bold text-lg text-[#003F5C] mb-2">Tỷ lệ các bệnh chính</h4>
+                    <div class="chart-container h-[250px] md:h-[200px] max-h-[250px] mx-auto">
+                         <canvas id="compositionChart"></canvas>
+                    </div>
+                </div>
+                
+                 <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h4 class="font-bold text-lg text-[#003F5C] mb-2">Các số liệu khác</h4>
+                    <div class="space-y-4 mt-4">
+                        <p class="text-2xl font-bold text-[#BC5090]">4,232 <span class="text-base font-normal block text-slate-600">Ca tiêu chảy</span></p>
+                        <p class="text-2xl font-bold text-[#BC5090]">123 <span class="text-base font-normal block text-slate-600">Ca nhiễm HIV mới</span></p>
+                        <p class="text-2xl font-bold text-[#BC5090]">1 <span class="text-base font-normal block text-slate-600">Ca não mô cầu</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prevention" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-bold text-center text-[#003F5C] mb-8">Hoạt Động Phòng Chống Dịch Trọng Tâm</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="border-t-4 border-[#FFA600] bg-slate-50 p-4 rounded-lg">
+                        <p class="text-5xl mb-2">💉</p>
+                        <h4 class="font-bold text-[#003F5C]">Tiêm Chủng</h4>
+                        <p class="text-sm text-slate-600 mt-1">Tổ chức các chiến dịch tiêm vắc xin phòng Sởi và tiêm bù vắc xin Uốn ván - Bạch hầu (Td).</p>
+                    </div>
+                    <div class="border-t-4 border-[#FF6361] bg-slate-50 p-4 rounded-lg">
+                        <p class="text-5xl mb-2">🦟</p>
+                        <h4 class="font-bold text-[#003F5C]">Giám Sát Véc-tơ</h4>
+                        <p class="text-sm text-slate-600 mt-1">Giám sát định kỳ và tổ chức các chiến dịch diệt lăng quăng để phòng chống Sốt xuất huyết.</p>
+                    </div>
+                    <div class="border-t-4 border-[#BC5090] bg-slate-50 p-4 rounded-lg">
+                        <p class="text-5xl mb-2">🔬</p>
+                        <h4 class="font-bold text-[#003F5C]">Xử Lý Ổ Dịch</h4>
+                        <p class="text-sm text-slate-600 mt-1">Chủ động giám sát và phối hợp xử lý kịp thời các ổ dịch Sốt xuất huyết và Tay chân miệng.</p>
+                    </div>
+                     <div class="border-t-4 border-[#58508D] bg-slate-50 p-4 rounded-lg">
+                        <p class="text-5xl mb-2">✈️</p>
+                        <h4 class="font-bold text-[#003F5C]">Kiểm Dịch Biên Giới</h4>
+                        <p class="text-sm text-slate-600 mt-1">Duy trì nghiêm ngặt hoạt động kiểm dịch y tế tại cảng hàng không và cảng đường thủy.</p>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-slate-300">
+            <p class="text-sm text-slate-500">Nguồn: Tổng hợp từ các Báo cáo công tác y tế tháng 01-06/2025 của Sở Y tế Cần Thơ.</p>
+            <p class="text-xs text-slate-400 mt-1">Phân tích & Trực quan hóa bởi Chuyên gia Phân tích số liệu dịch bệnh.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const wrapLabel = (label) => {
+            const maxLen = 16;
+            if (label.length <= maxLen) return label;
+            const words = label.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxLen) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+        
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: 'Inter',
+                            size: 12,
+                        },
+                        color: '#475569'
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: '#003F5C',
+                    titleFont: { family: 'Inter', size: 14, weight: 'bold' },
+                    bodyFont: { family: 'Inter', size: 12 },
+                    padding: 10,
+                    cornerRadius: 4,
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            },
+            scales: {
+                 x: {
+                    ticks: {
+                        color: '#475569',
+                        font: { family: 'Inter' }
+                    },
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#475569',
+                        font: { family: 'Inter' }
+                    },
+                    grid: {
+                        color: '#e2e8f0'
+                    }
+                }
+            }
+        };
+
+        const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+        const trendsChart = new Chart(trendsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+                datasets: [
+                    {
+                        label: 'Sốt xuất huyết',
+                        data: [32, 10, 37, 62, 47, 57],
+                        borderColor: '#FF6361',
+                        backgroundColor: '#FF6361',
+                        tension: 0.3,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Tay chân miệng',
+                        data: [27, 4, 32, 56, 109, 154],
+                        borderColor: '#BC5090',
+                        backgroundColor: '#BC5090',
+                        tension: 0.3,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Sởi & nghi Sởi',
+                        data: [49, 41, 144, 150, 110, 44],
+                        borderColor: '#FFA600',
+                        backgroundColor: '#FFA600',
+                        tension: 0.3,
+                        borderWidth: 3
+                    }
+                ]
+            },
+            options: { ...commonChartOptions }
+        });
+
+        const compositionCtx = document.getElementById('compositionChart').getContext('2d');
+        const compositionChart = new Chart(compositionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sởi & nghi Sởi', 'Tay chân miệng', 'Sốt xuất huyết'],
+                datasets: [{
+                    label: 'Tổng số ca',
+                    data: [538, 382, 245],
+                    backgroundColor: [
+                        '#FFA600',
+                        '#BC5090',
+                        '#FF6361',
+                    ],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Inter', size: 10 },
+                            boxWidth: 15,
+                            padding: 10
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#003F5C',
+                        callbacks: {
+                             title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
