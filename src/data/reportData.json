@@ -1,0 +1,38 @@
+{
+  "Tháng 1": {
+    "trends": {
+      "labels": [
+        "PlaceholderMonth"
+      ],
+      "sxh": [
+        32
+      ],
+      "tcm": [
+        27
+      ],
+      "soi": [
+        49
+      ]
+    },
+    "composition": {
+      "labels": [
+        "Sốt xuất huyết",
+        "Tay chân miệng",
+        "Sởi"
+      ],
+      "data": [
+        32,
+        27,
+        49
+      ]
+    },
+    "highlights": {
+      "tongKhamSo": 198646,
+      "khamNoiTru": 21361,
+      "tieuChay": 565,
+      "hiv": 22,
+      "naoMoCau": 0,
+      "tongKham": ""
+    }
+  }
+}
