@@ -1,5 +1,6 @@
 import { initializeApp, getApp, getApps, FirebaseOptions } from "firebase/app";
 import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseOptions = {
@@ -23,4 +24,7 @@ const ai = getAI(app, { backend: new GoogleAIBackend() });
 // The Google AI backend is used by default and does not need to be specified.
 const generativeModel = getGenerativeModel(ai, { model: "gemini-1.5-flash-latest" });
 
-export { generativeModel };
+// Initialize Firestore
+const db = getFirestore(app);
+
+export { generativeModel, db };

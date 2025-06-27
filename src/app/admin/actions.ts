@@ -2,48 +2,15 @@
 
 import { extractDataFromPdf } from '@/ai/flows/extract-data-from-pdf';
 import type { ReportData } from '@/types/report-data';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-// Define the path to the JSON file
-const dataFilePath = path.join(process.cwd(), 'src', 'data', 'reportData.json');
-
-// Helper function to read the existing data from the JSON file
-async function readReportData(): Promise<Record<string, ReportData>> {
-  try {
-    const fileContent = await fs.readFile(dataFilePath, 'utf-8');
-    if (!fileContent) return {};
-    return JSON.parse(fileContent);
-  } catch (error) {
-    // If the file doesn't exist, return an empty object
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-      return {};
-    }
-    console.error('Error reading report data file:', error);
-    throw new Error('Could not read report data file.');
-  }
-}
-
-// Helper function to write data to the JSON file
-async function writeReportData(data: Record<string, ReportData>): Promise<void> {
-  try {
-    await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Error writing to report data file:', error);
-    throw new Error('Could not write to report data file.');
-  }
-}
-
-// Helper function to convert a File object to a base64 data URI
-async function fileToDataUri(file: File): Promise<string> {
-    const buffer = await file.arrayBuffer();
-    const base64 = Buffer.from(buffer).toString('base64');
-    return `data:${file.type};base64,${base64}`;
-}
+import { 
+  saveReportToFirestore, 
+  loadAllReportsFromFirestore, 
+  deleteReportFromFirestore 
+} from '@/lib/firestore';
 
 /**
  * Server action to upload a single PDF report, process it with Gemini,
- * and save the extracted data to a persistent JSON file.
+ * and save the extracted data to Firestore.
  * @param formData The form data containing the uploaded file and the selected month.
  * @returns An object indicating success or failure with a message.
  */
@@ -64,16 +31,20 @@ export async function uploadReport(formData: FormData): Promise<{ success: boole
   }
 
   try {
-    const pdfDataUri = await fileToDataUri(file);
+    // Convert file to data URI
+    const buffer = await file.arrayBuffer();
+    const base64 = Buffer.from(buffer).toString('base64');
+    const pdfDataUri = `data:${file.type};base64,${base64}`;
+    
+    // Extract data using AI
     const extractedData = await extractDataFromPdf(pdfDataUri);
 
-    const allReports = await readReportData();
-    allReports[month] = extractedData;
-    await writeReportData(allReports);
+    // Save to Firestore
+    await saveReportToFirestore(month, extractedData);
     
     return { 
         success: true, 
-        message: `Đã xử lý và lưu báo cáo cho ${month} thành công.`,
+        message: `Đã xử lý và lưu báo cáo cho ${month} thành công vào Firestore.`,
     };
 
   } catch (error) {
@@ -81,37 +52,35 @@ export async function uploadReport(formData: FormData): Promise<{ success: boole
     if (error instanceof Error) {
         return { success: false, message: error.message };
     }
-    return { success: false, message: 'An unknown error occurred while processing the report.' };
+    return { success: false, message: 'Đã xảy ra lỗi không xác định khi xử lý báo cáo.' };
   }
 }
 
 /**
- * Server action to load all processed report data from the JSON file.
+ * Server action to load all processed report data from Firestore.
  * @returns An object containing all report data, keyed by month.
  */
 export async function loadAllReports(): Promise<Record<string, ReportData>> {
-    return await readReportData();
+    try {
+        return await loadAllReportsFromFirestore();
+    } catch (error) {
+        console.error('Error loading reports:', error);
+        return {};
+    }
 }
 
 /**
- * Server action to delete a specific report by month.
+ * Server action to delete a specific report by month from Firestore.
  * @param month The month of the report to delete.
  * @returns An object indicating success or failure with a message.
  */
 export async function deleteReport(month: string): Promise<{ success: boolean; message: string }> {
   try {
-    const allReports = await readReportData();
-    
-    if (!(month in allReports)) {
-      return { success: false, message: `Không tìm thấy báo cáo cho ${month}.` };
-    }
-    
-    delete allReports[month];
-    await writeReportData(allReports);
+    await deleteReportFromFirestore(month);
     
     return { 
       success: true, 
-      message: `Đã xóa báo cáo ${month} thành công.` 
+      message: `Đã xóa báo cáo ${month} thành công từ Firestore.` 
     };
   } catch (error) {
     console.error('Error in deleteReport action:', error);
