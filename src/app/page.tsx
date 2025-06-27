@@ -53,9 +53,40 @@ export default function Home() {
 
     const aggregateData = (): ReportData => {
       const initial: ReportData = {
-        trends: { labels: [], sxh: [], tcm: [], soi: [] },
+        trends: { 
+          labels: [], 
+          sxh: [], 
+          tcm: [], 
+          soi: [],
+          dauMuaKhi: [],
+          bachHau: [],
+          sars: [],
+          cumAH5N1: [],
+          cumAH1N1: []
+        },
         composition: { labels: ["Sốt xuất huyết", "Tay chân miệng", "Sởi"], data: [0, 0, 0] },
-        highlights: { tongKham: '', tongKhamSo: 0, khamNoiTru: 0, tieuChay: 0, hiv: 0, naoMoCau: 0 }
+        highlights: { tongKham: '', tongKhamSo: 0, khamNoiTru: 0, tieuChay: 0, hiv: 0, naoMoCau: 0 },
+        accidents: {
+          trafficAccidents: {
+            total: 0,
+            localCases: 0,
+            localPercentage: 0,
+            alcoholCases: 0,
+            alcoholPercentage: 0
+          },
+          occupationalAccidents: {
+            total: 0,
+            injuries: 0,
+            deaths: 0
+          }
+        },
+        additionalDiseases: {
+          dauMuaKhi: 0,
+          bachHau: 0,
+          sars: 0,
+          cumAH5N1: 0,
+          cumAH1N1: 0
+        }
       };
 
       const sortedMonths = selectedMonths.sort((a, b) => {
@@ -73,6 +104,13 @@ export default function Home() {
         acc.trends.sxh.push(...report.trends.sxh);
         acc.trends.tcm.push(...report.trends.tcm);
         acc.trends.soi.push(...report.trends.soi);
+        
+        // Add new disease trends with fallback to 0
+        acc.trends.dauMuaKhi.push(...(report.trends.dauMuaKhi || [0]));
+        acc.trends.bachHau.push(...(report.trends.bachHau || [0]));
+        acc.trends.sars.push(...(report.trends.sars || [0]));
+        acc.trends.cumAH5N1.push(...(report.trends.cumAH5N1 || [0]));
+        acc.trends.cumAH1N1.push(...(report.trends.cumAH1N1 || [0]));
 
         // Aggregate composition
         acc.composition.data[0] += report.composition.data[0] || 0;
@@ -85,9 +123,36 @@ export default function Home() {
         acc.highlights.tieuChay += report.highlights.tieuChay || 0;
         acc.highlights.hiv += report.highlights.hiv || 0;
         acc.highlights.naoMoCau += report.highlights.naoMoCau || 0;
+
+        // Aggregate accidents with fallback
+        if (report.accidents) {
+          acc.accidents.trafficAccidents.total += report.accidents.trafficAccidents?.total || 0;
+          acc.accidents.trafficAccidents.localCases += report.accidents.trafficAccidents?.localCases || 0;
+          acc.accidents.trafficAccidents.alcoholCases += report.accidents.trafficAccidents?.alcoholCases || 0;
+          acc.accidents.occupationalAccidents.total += report.accidents.occupationalAccidents?.total || 0;
+          acc.accidents.occupationalAccidents.injuries += report.accidents.occupationalAccidents?.injuries || 0;
+          acc.accidents.occupationalAccidents.deaths += report.accidents.occupationalAccidents?.deaths || 0;
+        }
+
+        // Aggregate additional diseases with fallback
+        if (report.additionalDiseases) {
+          acc.additionalDiseases.dauMuaKhi += report.additionalDiseases.dauMuaKhi || 0;
+          acc.additionalDiseases.bachHau += report.additionalDiseases.bachHau || 0;
+          acc.additionalDiseases.sars += report.additionalDiseases.sars || 0;
+          acc.additionalDiseases.cumAH5N1 += report.additionalDiseases.cumAH5N1 || 0;
+          acc.additionalDiseases.cumAH1N1 += report.additionalDiseases.cumAH1N1 || 0;
+        }
         
         return acc;
       }, initial);
+
+      // Calculate percentages for traffic accidents
+      if (aggregated.accidents.trafficAccidents.total > 0) {
+        aggregated.accidents.trafficAccidents.localPercentage = 
+          Math.round((aggregated.accidents.trafficAccidents.localCases / aggregated.accidents.trafficAccidents.total) * 100 * 10) / 10;
+        aggregated.accidents.trafficAccidents.alcoholPercentage = 
+          Math.round((aggregated.accidents.trafficAccidents.alcoholCases / aggregated.accidents.trafficAccidents.total) * 100 * 10) / 10;
+      }
       
       // Format tongKham after aggregation
       if (aggregated.highlights.tongKhamSo >= 1_000_000) {

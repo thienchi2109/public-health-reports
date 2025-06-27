@@ -9,7 +9,7 @@ export function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 text-xl font-bold">
               <BarChart3 className="h-6 w-6 text-primary" />
-              <span>Trình Quản lý Infographic</span>
+              <span>TRỰC QUAN HÓA DỮ LIỆU BÁO CÁO CÔNG TÁC Y TẾ TP.CẦN THƠ</span>
             </Link>
           </div>
           <nav>

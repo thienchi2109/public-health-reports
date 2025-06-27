@@ -12,6 +12,21 @@
       ],
       "soi": [
         49
+      ],
+      "dauMuaKhi": [
+        0
+      ],
+      "bachHau": [
+        0
+      ],
+      "sars": [
+        0
+      ],
+      "cumAH5N1": [
+        0
+      ],
+      "cumAH1N1": [
+        0
       ]
     },
     "composition": {
@@ -33,186 +48,27 @@
       "hiv": 22,
       "naoMoCau": 0,
       "tongKham": ""
-    }
-  },
-  "Tháng 2": {
-    "trends": {
-      "labels": [
-        "PlaceholderMonth"
-      ],
-      "sxh": [
-        10
-      ],
-      "tcm": [
-        4
-      ],
-      "soi": [
-        41
-      ]
     },
-    "composition": {
-      "labels": [
-        "Sốt xuất huyết",
-        "Tay chân miệng",
-        "Sởi"
-      ],
-      "data": [
-        10,
-        4,
-        41
-      ]
+    "accidents": {
+      "trafficAccidents": {
+        "total": 361,
+        "localCases": 338,
+        "localPercentage": 94,
+        "alcoholCases": 29,
+        "alcoholPercentage": 6
+      },
+      "occupationalAccidents": {
+        "total": 51,
+        "injuries": 0,
+        "deaths": 0
+      }
     },
-    "highlights": {
-      "tongKhamSo": 218994,
-      "khamNoiTru": 27545,
-      "tieuChay": 780,
-      "hiv": 11,
-      "naoMoCau": 0,
-      "tongKham": ""
-    }
-  },
-  "Tháng 3": {
-    "trends": {
-      "labels": [
-        "PlaceholderMonth"
-      ],
-      "sxh": [
-        37
-      ],
-      "tcm": [
-        32
-      ],
-      "soi": [
-        144
-      ]
-    },
-    "composition": {
-      "labels": [
-        "Sốt xuất huyết",
-        "Tay chân miệng",
-        "Sởi"
-      ],
-      "data": [
-        37,
-        32,
-        144
-      ]
-    },
-    "highlights": {
-      "tongKhamSo": 210274,
-      "khamNoiTru": 24480,
-      "tieuChay": 866,
-      "hiv": 27,
-      "naoMoCau": 0,
-      "tongKham": ""
-    }
-  },
-  "Tháng 4": {
-    "trends": {
-      "labels": [
-        "PlaceholderMonth"
-      ],
-      "sxh": [
-        62
-      ],
-      "tcm": [
-        56
-      ],
-      "soi": [
-        150
-      ]
-    },
-    "composition": {
-      "labels": [
-        "Sốt xuất huyết",
-        "Tay chân miệng",
-        "Sởi"
-      ],
-      "data": [
-        62,
-        56,
-        150
-      ]
-    },
-    "highlights": {
-      "tongKhamSo": 199163,
-      "khamNoiTru": 23566,
-      "tieuChay": 697,
-      "hiv": 23,
-      "naoMoCau": 0,
-      "tongKham": ""
-    }
-  },
-  "Tháng 5": {
-    "trends": {
-      "labels": [
-        "PlaceholderMonth"
-      ],
-      "sxh": [
-        47
-      ],
-      "tcm": [
-        109
-      ],
-      "soi": [
-        110
-      ]
-    },
-    "composition": {
-      "labels": [
-        "Sốt xuất huyết",
-        "Tay chân miệng",
-        "Sởi"
-      ],
-      "data": [
-        47,
-        109,
-        110
-      ]
-    },
-    "highlights": {
-      "tongKhamSo": 179613,
-      "khamNoiTru": 25485,
-      "tieuChay": 666,
-      "hiv": 20,
-      "naoMoCau": 0,
-      "tongKham": ""
-    }
-  },
-  "Tháng 6": {
-    "trends": {
-      "labels": [
-        "PlaceholderMonth"
-      ],
-      "sxh": [
-        57
-      ],
-      "tcm": [
-        154
-      ],
-      "soi": [
-        44
-      ]
-    },
-    "composition": {
-      "labels": [
-        "Sốt xuất huyết",
-        "Tay chân miệng",
-        "Sởi"
-      ],
-      "data": [
-        57,
-        154,
-        44
-      ]
-    },
-    "highlights": {
-      "tongKhamSo": 190273,
-      "khamNoiTru": 22940,
-      "tieuChay": 658,
-      "hiv": 20,
-      "naoMoCau": 1,
-      "tongKham": ""
+    "additionalDiseases": {
+      "dauMuaKhi": 0,
+      "bachHau": 0,
+      "sars": 0,
+      "cumAH5N1": 0,
+      "cumAH1N1": 0
     }
   }
 }
