@@ -4,6 +4,7 @@ import type { ReportData } from "@/types/report-data";
 import StatCard from "./stat-card";
 import TrendsChart from "./charts/trends-chart";
 import CompositionChart from "./charts/composition-chart";
+import SummaryTable from "./summary-table"; // Import mới
 import { Activity, Bed, Droplets, Siren, Users } from "lucide-react";
 
 interface InfographicDashboardProps {
@@ -58,6 +59,11 @@ export default function InfographicDashboard({ data }: InfographicDashboardProps
         <div className="lg:col-span-3">
           <CompositionChart data={data.composition} />
         </div>
+      </div>
+
+      {/* Bảng Tổng Hợp Mới */}
+      <div>
+        <SummaryTable data={data} />
       </div>
     </div>
   );
