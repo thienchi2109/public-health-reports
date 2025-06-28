@@ -18,9 +18,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  serverActions: {
-    bodySizeLimit: '5mb',
-  },
+  // serverActions: { // Đã bị chú thích hoặc xóa do không được hỗ trợ trong phiên bản Next.js này
+  //   bodySizeLimit: '5mb',
+  // },
 };
 
 export default nextConfig;
